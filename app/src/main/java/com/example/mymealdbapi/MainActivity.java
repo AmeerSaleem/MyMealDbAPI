@@ -1,5 +1,6 @@
 package com.example.mymealdbapi;
 
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,7 +15,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
         String mealUrl = "https://www.themealdb.com/api/json/v1/1/search.php?s=Arrabiata";
 
-        Toast.makeText(this, "Hello from inside", Toast.LENGTH_SHORT).show();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, mealUrl, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
                     mealInstructions.setText(mealObject.getString("strInstructions"));
                     Glide.with(getApplicationContext())
                             .load(mealObject.getString("strMealThumb"))
+                            .transition(GenericTransitionOptions.<Drawable>with(R.anim.expand_in_once_label_items))
                             .into(mealImage);
 //                    Log.e("Error Here", "inside onResponse" + mainArray.getJSONObject(1).getString("strMeal"));
                     if (mainArray != null) {
